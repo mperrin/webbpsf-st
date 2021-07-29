@@ -2847,7 +2847,7 @@ def coeffs_to_seg_state(coeffs):
 #--------------------------------------------------------------------------------
 # Coarse track pointing (for early commissioning)
 
-def get_coarse_blur_parameters(t0, duration, pixelscale, plot=False, case=1,):
+def get_coarse_blur_parameters(t0, duration, pixelscale, plot=False, case=1, add_slosh=False):
     """ Extract coarse blur center offset and convolution kernel from the Coarse Point sim time series
 
     Parameters
@@ -2874,6 +2874,8 @@ def get_coarse_blur_parameters(t0, duration, pixelscale, plot=False, case=1,):
     kernel : 2D ndarray
         Convolution kernel to pass to WebbPSF, generated from the LOS model during the observation
         sampled/rasterized into the specified pixel scale.
+    add_slosh : bool
+        Add a completely made-up, ad-hoc model of a slow "slosh" oscillation. **NO detailed physics or basis, this is completely made up**
     """
 
     pcsmodel = astropy.table.Table.read(os.path.join(__location__, 'otelm', f'coarse_track{case}_sim_pointing.fits'))
@@ -2889,6 +2891,19 @@ def get_coarse_blur_parameters(t0, duration, pixelscale, plot=False, case=1,):
     cen = coords.mean(axis=1)       # Center
 
     dc = (coords-cen.reshape(2,1) )   # differential coords, in arcsec
+
+    if add_slosh:
+
+        slosh_amp_x = 0.4
+        slosh_amp_y = 0.1
+        slosh_period = 30
+
+        dtime = pcsmodel['time'][wt] - t0
+
+        dc[0] += np.sin( 2*np.pi/slosh_period * dtime) * slosh_amp_y
+        dc[1] += np.sin( 2*np.pi/slosh_period * dtime) * slosh_amp_x
+
+
 
     # Set up box to raster the curve into
     halfbox = np.ceil(np.abs(dc).max()/pixelscale)
