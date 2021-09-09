@@ -1258,8 +1258,9 @@ class JWInstrument(SpaceTelescopeInstrument):
             cp_case = local_options.get('jitter_coarse_model_case', 2)      # Coarse pointing model case, 1 or 2
             exp_duration = local_options.get('exp_duration', 75)     # Duration in seconds
             exp_start_time = local_options.get('exp_start_time', 0)  # Start time in seconds
-            add_slosh = local_options.get('jitter_add_slosh', False)  # Add made-up "fuel slosh" oscillation?
+            add_slosh = local_options.get('jitter_add_slosh', True)  # Add made-up "fuel slosh" oscillation?
 
+            print(f'WEBBPSF: Using PSF jitter PCS=Coarse model, with extra slosh={add_slosh}')
             offset, kernel = opds.get_coarse_blur_parameters(exp_start_time, exp_duration, result[0].header['PIXELSCL'], case=cp_case, add_slosh=add_slosh)
 
             kern = astropy.convolution.kernels.CustomKernel(kernel)

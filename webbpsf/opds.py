@@ -2894,16 +2894,17 @@ def get_coarse_blur_parameters(t0, duration, pixelscale, plot=False, case=1, add
 
     if add_slosh:
 
-        slosh_amp_x = 0.4
-        slosh_amp_y = 0.1
+        slosh_amp_x = 0.5
+        slosh_amp_y = 0.2
         slosh_period = 30
+        print(f"Adding extra PSF slosh, amplitude {slosh_amp_x}, {slosh_amp_y}, period {slosh_period} s, for duration {duration} s")
 
         dtime = pcsmodel['time'][wt] - t0
 
         dc[0] += np.sin( 2*np.pi/slosh_period * dtime) * slosh_amp_y
         dc[1] += np.sin( 2*np.pi/slosh_period * dtime) * slosh_amp_x
 
-
+        print(f"Jitter PSF position range: {dc[0].min()} - {dc[0].max()}, {dc[1].min()} - {dc[1].max()} arcsec")
 
     # Set up box to raster the curve into
     halfbox = np.ceil(np.abs(dc).max()/pixelscale)
