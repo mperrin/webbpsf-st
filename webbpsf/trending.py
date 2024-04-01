@@ -803,7 +803,7 @@ def wavefront_drift_plots(opdtable, start_time, end_time, verbose=False,
 
     Parameters
     -----------
-    start_time, end_time : Astropy Time instances
+    start_time, end_time : Astropy Time instances or strings
         Start and end times to define the range of OPDs to plot for
     verbose : bool
         Print more verbose output
@@ -817,6 +817,8 @@ def wavefront_drift_plots(opdtable, start_time, end_time, verbose=False,
         Add label for APT/OSS program and observation number to each plot
     """
 
+    start_time = astropy.time.Time(start_time)
+    end_time = astropy.time.Time(end_time)
     def vprint(*text):
         if verbose: print(*text)
 
