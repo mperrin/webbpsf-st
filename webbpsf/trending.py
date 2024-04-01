@@ -614,7 +614,11 @@ def single_measurement_trending_plot(opdtable, row_index=-1, reference=None, ver
         show_opd_image(post_opd * nanmask, ax=iax, title=None, vmax=vmax, mask=mask, maskc3=mask_without_C3, fontsize=fontsize)
         iax.set_title(f"Measurement (Post Move)\n{get_datetime_utc(post_opd_hdu)}", fontsize=fontsize*1.2, fontweight='bold')
 
-        sur_opd = webbpsf.opds.sur_to_opd(sur_fn, ignore_missing=ignore_missing)
+        try:
+            sur_opd = webbpsf.opds.sur_to_opd(sur_fn, ignore_missing=ignore_missing)
+        except FileNotFoundError:
+            print(f"Missing SUR file: {sur_fn}")
+            sur_opd = np.zeros_like(post_opd)
         # cosmetic: handle masking slightly differently here to accomodate slightly different edge pixels
         sur_mask = sur_opd != 0
         surnanmask = nanmask.copy()
