@@ -918,7 +918,7 @@ def wavefront_drift_plots(opdtable, start_time, end_time, verbose=False,
 
         deltas_shown.append(delta_opd)
 
-        title = f"{date[0:10]}  {date[11:16]}\n$\Delta T =${deltat * 24:.1f} hr"
+        title = f"{date[0:10]}  {date[11:16]}\n$\\Delta T =${deltat * 24:.1f} hr"
         if label_cid:
             title = f"{cid}\n" + title
         if label_visit:
@@ -1250,7 +1250,7 @@ def monthly_trending_plot(year, month, verbose=True, instrument='NIRCam', filter
         ee_ax_ylim = np.max([ee_ax_ylim, np.abs((ees_at_rad-median_ee)/median_ee).max()*1.1]) # display tweak: adjust the plot Y scale sensibly to its contents
 
         axes[1].plot_date(dates_array.plot_date, (ees_at_rad - median_ee)/median_ee, ls='-', color=color,
-                          label=f"$\Delta$EE within {ee_rad:.2f} arcsec ({ee_npix} pix)")
+                          label=f"$\\Delta$EE within {ee_rad:.2f} arcsec ({ee_npix} pix)")
 
         axes[1].text(0.01, 0.75-i*0.12, f'Median EE within {ee_rad:.2f} arcsec = {median_ee:.3f}', color=color,
                      fontweight='bold',
@@ -1827,7 +1827,7 @@ def delta_wfe_around_time(datetime, plot=True, ax=None, vmax=0.05, return_filena
         show_opd_image(delta_opd * nanmask, ax=ax, vmax=vmax)
         plt.colorbar(mappable=ax.images[0], label='WFE [microns]')
 
-        ax.set_title(f"$\Delta$WFE in the {post_delta_t - prev_delta_t:.2f} d around {datetime}")
+        ax.set_title(f"$\\Delta$WFE in the {post_delta_t - prev_delta_t:.2f} d around {datetime}")
         ax.set_xlabel(f'{post_opd_fn} - \n{prev_opd_fn}')
         ax.set_xticks([])
         ax.xaxis.set_visible(True)
