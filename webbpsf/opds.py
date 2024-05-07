@@ -3279,7 +3279,7 @@ def sur_to_opd(sur_filename, ignore_missing=False, npix=256):
 
     if not os.path.exists(sur_filename):
         if not ignore_missing:
-            raise FileNotFoundError(f"Missing SUR: {sur_filename}. Download of these should eventually be automated; for now, manually retrieve from WSSTAS at https://wsstas.stsci.edu/wsstas/staticPage/showContent/RecentSURs?primary=master.png")
+            raise FileNotFoundError(f"Missing SUR: {sur_filename}. Download of these should eventually be automated; for now, manually retrieve from WSSTAS at https://wsstas.stsci.edu/wsstas/staticPage/showContent/RecentSURs?primary=primary.png")
         else:
             return np.zeros((npix,npix), float)
     ote.move_sur(sur_filename)

@@ -727,7 +727,7 @@ def single_measurement_trending_plot(opdtable, row_index=-1, reference=None, ver
              horizontalalignment='left')
 
 
-def series_of_measurement_trending_plots(opdtable, ignore_missing=False, start_date=None):
+def series_of_measurement_trending_plots(opdtable, ignore_missing=False, start_date=None, **kwargs):
     """Generate the wavefront trending plot for all NRCA3 FP1 OPDs since the completion of OTE alignment
 
     Calls wavefront_trending_plot for all rows in the table, except any duplicates are ignored.
@@ -758,7 +758,7 @@ def series_of_measurement_trending_plots(opdtable, ignore_missing=False, start_d
                 # it gets folded in with the pre correction measurement plot
                 continue
 
-            single_measurement_trending_plot(opdtable, row_index=row_index, ignore_missing=ignore_missing)
+            single_measurement_trending_plot(opdtable, row_index=row_index, ignore_missing=ignore_missing, **kwargs)
 
             pdf.savefig()  # saves the current figure into a pdf page
 
